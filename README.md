@@ -23,7 +23,7 @@ The analysis focuses on:
 
 ## Reports
 
-1. [x] Daily Market Summary 
-2. [ ] Vendor Revenue Ranking
-3. [ ] Customer Analysis
-4. [ ] Product Analysis
+[x] 1.Daily Market Summary 
+[ ] 2.Vendor Revenue Ranking
+[ ] 3.Customer Analysis
+[ ] 4.Product Analysis
