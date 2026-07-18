@@ -24,6 +24,7 @@ The project focuses on:
 ## Reports
 
 1. [x] [Daily Market Summary](SQL/01_Daily_Market_Summary.sql)
-2. [ ] Vendor Revenue Ranking
-3. [ ] Customer Analysis
-4. [ ] Product Analysis
+2. [x] [Vendor Revenue Ranking](SQL/02_Vendor_Revenue_Summary.sql)
+3. [x] Customer Analysis
+4. [x] Product Analysis
+5. [x] Vendor Best-Selling Product
