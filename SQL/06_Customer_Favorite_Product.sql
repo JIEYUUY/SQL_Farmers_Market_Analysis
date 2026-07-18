@@ -2,21 +2,20 @@
 ==================================================
 Project : Farmers Market Analytics
 
-Report  : Customer Favorite Product
+Report  : Vendor Customer Analysis
 
 Author  : Jieyu Ke
 
 Description
 
-Summarizes customer spending by product and identifies
-each customer's favorite product based on total spending.
+Analyze how many different customers each vendor has.
 
 Metrics:
 
-- Customer Id
-- Product ID
-- Product name
-- Total Spending
+- Vendor ID
+- Vendor Name
+- Customer ID
+- Average Spending Per Customer Rank
 - Revenue rank
 
 Skills Used
@@ -30,39 +29,39 @@ Skills Used
 ==================================================
 */
 
-WITH customer_product_summary AS
+WITH vendor_customer_summary AS
 (
     SELECT
+        vendor_id,
         customer_id,
-        product_id,
-        SUM(quantity * cost_to_customer_per_qty) AS total_spending
+        ROUND(AVG(quantity * cost_to_customer_per_qty / ),2) AS average_spending_per_customer
     FROM customer_purchases
-    GROUP BY customer_id, product_id
+    GROUP BY vendor_id, customer_id
 ),
 
-ranked_customer_products AS
+ranked_vendor_customer AS
 (
     SELECT
-		CP.customer_id,
-        P.product_id,
-        P.product_name,
-        CP.total_spending,
+        VC.vendor_id,
+        V.vendor_name,
+        VC.customer_id,
+        VC.average_spending_per_customer,
         RANK() OVER
         (
-            PARTITION BY CP.customer_id
-            ORDER BY CP.total_spending DESC
-        ) AS revenue_rank
-    FROM customer_product_summary AS CP
-    JOIN product AS P
-        ON CP.product_id = P.product_id
+            PARTITION BY VC.vendor_id
+            ORDER BY VC.average_spending_per_customer DESC
+        ) AS verage_spending_per_customer_rank
+    FROM vendor_customer_summary AS VC
+    JOIN vendor AS V
+        ON VC.vendor_id = V.vendor_id
 )
 
 SELECT
+	vendor_id,
+	vendor_name,
 	customer_id,
-	product_id,
-	product_name,
-	total_spending,
-    revenue_rank
-FROM ranked_customer_products
-WHERE revenue_rank = 1
-ORDER BY customer_id;
+	verage_spending_per_customer_rank
+
+FROM ranked_vendor_customer
+WHERE verage_spending_per_customer_rank = 1
+ORDER BY vendor_id;
