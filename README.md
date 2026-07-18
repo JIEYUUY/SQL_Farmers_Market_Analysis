@@ -1,6 +1,5 @@
 # SQL_Farmers_Market_Analytics
-SQL data analysis project using a farmers market database
-# Farmers Market Analytics
+SQL data analysis project using a farmers market database.
 
 ## Project Overview
 
@@ -16,14 +15,15 @@ The analysis focuses on:
 ## SQL Skills Used
 
 - GROUP BY
+- Aggregate Functions
 - JOIN
 - CTE
-- Subquery
+- Subqueries
 - Window Functions
 
 ## Reports
 
-1. [x] Daily Market Summary
+1. [x] [Daily Market Summary](SQL/01_Daily_Market_Summary.sql)
 2. [ ] Vendor Revenue Ranking
 3. [ ] Customer Analysis
 4. [ ] Product Analysis
