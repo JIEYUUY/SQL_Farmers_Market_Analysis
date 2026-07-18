@@ -28,24 +28,33 @@ Skills Used
 ==================================================
 */
 
-WITH revenue_data AS
+WITH daily_market_summary AS
 (
-SELECT 
-	market_date,
-	COUNT(DISTINCT customer_id) AS total_num_of_customers,
-	SUM(quantity * cost_to_customer_per_qty) AS total_revenue,
-    SUM(quantity) AS total_qty,
-    COUNT(*) AS number_of_transactions
-FROM customer_purchases
-GROUP BY market_date
+	SELECT
+        market_date,
+        COUNT(DISTINCT customer_id) AS total_num_of_customers,
+        SUM(quantity * cost_to_customer_per_qty) AS total_revenue,
+        SUM(quantity) AS total_qty,
+        COUNT(*) AS number_of_transactions
+    FROM customer_purchases
+    GROUP BY market_date
 ),
-ranked_revenue AS
+ranked_daily_market AS
 (
-SELECT
-	revenue_data.*,
-	RANK() OVER(ORDER BY total_revenue DESC) AS total_revenue_rank
-	FROM revenue_data
+    SELECT
+        daily_market_summary.*,
+        RANK() OVER (
+            ORDER BY total_revenue DESC
+        ) AS total_revenue_rank
+    FROM daily_market_summary
 )
+
 SELECT
-	ranked_revenue.*
-FROM ranked_revenue
+    market_date,
+    total_num_of_customers,
+    total_revenue,
+    total_qty,
+    number_of_transactions,
+    total_revenue_rank
+FROM ranked_daily_market
+ORDER BY total_revenue_rank;
