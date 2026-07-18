@@ -1,18 +1,18 @@
-# SQL_Farmers_Market_Analytics
+# Farmers_Market_Analytics
 SQL data analysis project using a farmers market database.
 
 ## Project Overview
 
 This project analyzes farmers market transaction data using MySQL.
 
-The analysis focuses on:
+The project focuses on:
 
 - Daily market performance
 - Vendor revenue
 - Customer purchasing behavior
 - Product sales performance
 
-## SQL Skills Used
+## SQL Skills
 
 - GROUP BY
 - Aggregate Functions
