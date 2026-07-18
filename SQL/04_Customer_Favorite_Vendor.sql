@@ -2,24 +2,28 @@
 ==================================================
 Project : Farmers Market Analytics
 
-Report  : Customer Favorite Vendor
+Report  : Vendor Best-Selling Product
 
 Author  : Jieyu Ke
 
 Description
 
-Summarizes customer spending by vendor and identifies each customer's favorite vendor.
+Summarizes product revenue by vendor and identifies
+each vendor's best-selling product based on total revenue.
 
 Metrics:
 
-- Customer id
-- Vendor id
-- Total spending
-- Total spending rank
+- Vendor ID
+- Vendor name
+- Product ID
+- Product name
+- Total revenue
+- Revenue rank
 
 Skills Used
 
 - CTE
+- JOIN
 - GROUP BY
 - Aggregate Functions
 - Window Function (RANK)
@@ -27,28 +31,43 @@ Skills Used
 ==================================================
 */
 
-WITH customer_vendor_summary AS
-(
-	SELECT
-        customer_id,
-        vendor_id,
-        SUM(quantity * cost_to_customer_per_qty) AS total_spending
-    FROM customer_purchases
-    GROUP BY customer_id,vendor_id
-),
-ranked_customer_vendors AS
+WITH vendor_product_summary AS
 (
     SELECT
-		customer_vendor_summary.*,
-        RANK() OVER (PARTITION BY customer_id
-					 ORDER BY total_spending DESC
-        ) AS total_spending_rank
-    FROM customer_vendor_summary
+        product_id,
+        vendor_id,
+        SUM(quantity * cost_to_customer_per_qty) AS total_revenue
+    FROM customer_purchases
+    GROUP BY vendor_id, product_id
+),
+
+ranked_vendor_products AS
+(
+    SELECT
+        PV.product_id,
+        P.product_name,
+        PV.vendor_id,
+        V.vendor_name,
+        PV.total_revenue,
+        RANK() OVER
+        (
+            PARTITION BY PV.vendor_id
+            ORDER BY PV.total_revenue DESC
+        ) AS revenue_rank
+    FROM vendor_product_summary AS PV
+    JOIN vendor AS V
+        ON PV.vendor_id = V.vendor_id
+    JOIN product AS P
+        ON PV.product_id = P.product_id
 )
 
 SELECT
-    customer_id,
     vendor_id,
-    total_spending
-FROM ranked_customer_vendors
-WHERE total_spending_rank = 1 ;
+    vendor_name,
+    product_id,
+    product_name,
+    total_revenue,
+    revenue_rank
+FROM ranked_vendor_products
+WHERE revenue_rank = 1
+ORDER BY vendor_id;
