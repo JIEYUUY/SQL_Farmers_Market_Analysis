@@ -1,4 +1,4 @@
-# SQL_Farmers_Market_Analysis
+# SQL_Farmers_Market_Analytics
 SQL data analysis project using a farmers market database
 # Farmers Market Analytics
 
