@@ -34,4 +34,4 @@ The project focuses on:
 9. [x] [Daily_Sales_Performance](09_Daily_Sales_Performance)
 10. [x] [Vendor_Daily_Performance](10_Vendor_Daily_Performance)
 11. [x] [Top_3_Products_by_Vendor](11_Top_3_Products_by_Vendor)
-12. [x] [12_Daily_Revenue_Growth_Analysis](12_Daily_Revenue_Growth_Analysis)
+12. [x] [Daily_Revenue_Growth_Analysis](12_Daily_Revenue_Growth_Analysis)
