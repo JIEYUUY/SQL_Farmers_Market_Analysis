@@ -46,7 +46,7 @@ SELECT
 	COUNT(DISTINCT CONCAT_WS("-",customer_id,market_date,transaction_time)) AS total_orders,
     COUNT(DISTINCT customer_id) AS customer_count
 FROM customer_purchases
-GROUP BY sales_month
+GROUP BY DATE_FORMAT(market_date,'%Y-%m')
 )
 SELECT 
 	sales_month,
